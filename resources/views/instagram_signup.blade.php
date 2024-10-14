@@ -8,6 +8,8 @@
 <body>
     <center>
     <h1><b>Instagram</b></h1>
+    <h2>S</h2>
+    <h2>Qureshi</h2>
     <h4>Sign up to see photos and videos <br>
           from your friends</h4>
           <button>Log in with facebook</button>
