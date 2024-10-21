@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SignupController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,3 +32,5 @@ Route::get('/multiplication',[Signupcontroller::class, 'Multiplication']);
 Route::get('/division',[Signupcontroller::class, 'Division']);
 
 Route::get('/calculator',[Signupcontroller::class,'Calculator']);
+
+Route::post('/signup',[Signupcontroller::class,'Signup']);
