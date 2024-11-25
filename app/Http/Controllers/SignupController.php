@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
+use Hash;
+use Session;
 
 class SignupController extends Controller
 {
@@ -101,7 +105,7 @@ class SignupController extends Controller
     public function Signup(Request $request){
         $email=$request->input('email');
         $mobile_no=$request->input('mobile_no');
-        $psw=$request->input('psw');
+        $psw=Hash::make($request->psw);
         $f_name=$request->input('f_name');
         $u_name=$request->input('u_name');
         $address=$request->input('address');
@@ -115,12 +119,19 @@ class SignupController extends Controller
         $insert->address=$address;
         $insert->user_name=$u_name;
         $insert->gender=$gender;
-        $insert->save();
 
-        if($insert){
-            return view('/instagram_login');
-        }else{
-            return"failed";
+
+        try {
+            // Save the user
+            if ($insert->save()) {
+                $successMsg = "You have signed up successfully";
+                return view('instagram_login', compact('successMsg', 'email'));
+            } else {
+                return "Failed to save user details.";
+            }
+        } catch (\Exception $e) {
+            // Capture and display any error
+            return "Error: " . $e->getMessage();
         }
         }
       

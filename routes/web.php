@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SignupController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PostControlle;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PostController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,12 +30,37 @@ Route::get('/instagram_login', function () {
     return view('instagram_login');
 });
 
-Route::get('/signup',[SignupController::class, 'Signup']);
+
+
+// Route::get('/signup',[SignupController::class, 'Signup']);
 Route::get('/addition',[SignupController::class, 'Addition']);
 Route::get('/substraction',[SignupController::class, 'Substraction']);
 Route::get('/multiplication',[Signupcontroller::class, 'Multiplication']);
 Route::get('/division',[Signupcontroller::class, 'Division']);
 
 Route::get('/calculator',[Signupcontroller::class,'Calculator']);
+Route::post('/login-user', [LoginController::class, 'login_user']);
 
 Route::post('/signup',[Signupcontroller::class,'Signup']);
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// });
+
+Route::get('/dashboard', [DashboardController::class, 'Dashboard'])->middleware('auth');
+Route::get('/profile', [ProfileController::class, 'Profile'])->middleware('auth');
+Route::post('/profile/update', [ProfileController::class, 'Update'])->middleware('auth');
+
+Route::get('/logout',[DashboardController::class,'logout']);
+
+
+
+
+//Posts
+
+
+Route::post('/create_post_backened', [PostController::class, 'CreatePost'])->middleware('auth');
+Route::get('/create_post', [PostController::class, 'CreatePostScreen'])->middleware('auth');
+
+
+
