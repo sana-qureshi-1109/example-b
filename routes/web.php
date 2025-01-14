@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostControlle;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\AdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,9 +19,9 @@ use App\Http\Controllers\PostController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/instagram_signup', function () {
     return view('instagram_signup');
@@ -28,6 +29,10 @@ Route::get('/instagram_signup', function () {
 
 Route::get('/instagram_login', function () {
     return view('instagram_login');
+});
+
+Route::get('/layout', function () {
+    return view('layouts/default');
 });
 
 
@@ -63,4 +68,14 @@ Route::post('/create_post_backened', [PostController::class, 'CreatePost'])->mid
 Route::get('/create_post', [PostController::class, 'CreatePostScreen'])->middleware('auth');
 
 
+//Admin-Panel
+Route::get('/admin-dashboard',[AdminController::class,'Dashboard'])->name('admin-dashboard');
+Route::get('/admin-users',[AdminController::class,'UsersPage'])->name('admin-users');
+Route::get('/admin-posts',[AdminController::class,'PostsPage'])->name('admin-posts');
 
+
+//manager-panel
+
+Route::get('/layout/manager', function () {
+    return view('layouts/manager');
+});

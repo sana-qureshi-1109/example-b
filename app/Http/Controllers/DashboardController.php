@@ -19,7 +19,8 @@ class DashboardController extends Controller
             $userData=User::get();
 
             //get post data
-            $posts=Post::get();
+            $posts=Post::with('user')->get();
+            
          
 
 

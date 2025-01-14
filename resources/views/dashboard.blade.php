@@ -1,12 +1,5 @@
-<!-- resources/views/dashboard.blade.php -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-</head>
-<body>
+
+
 
 @if(Session::has('success'))
             <h1 style="color:green">{{ Session::get('success') }}</h1>
@@ -25,11 +18,31 @@
         <br><a href="/create_post">Create Post</a>
 
         @foreach($posts as $post)
-        <h1>{{$post->location}}</h1>
-        <img src ="{{url($post->image)}}" alt="" width="180" height="180">
-        <h1>{{$post->caption}}</h1>
+        <div class="box1">
+       <div class="profile_pic">
+        <img src="{{$post->user->profile_pic_path}}" alt="" width="90" height="90">
+</div>
+    
+     
+            
+
+        <div class="username">
+        <lable class="user_name_lable">{{$post->user->name}}</lable>
+        </div>
+
+         <div class="location">
+         <i class="fa fa-map-marker" aria-hidden="true"> </i>{{$post->location}}<br>
+         </div>
+    
         
-        <hr>
+        <div class="post_image">
+        <img src ="{{url($post->image)}}" alt="" width="390" height="200">
+</div>
+    
+        <h3>{{$post->caption}}</h3>
+<!--         
+        <hr> -->
+        </div>
         @endforeach
 
         
@@ -61,5 +74,5 @@
 
 
 </table>
-</body>
-</html>
+
+

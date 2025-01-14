@@ -102,40 +102,107 @@ class SignupController extends Controller
     }
 
     
-    public function Signup(Request $request){
-        $email=$request->input('email');
-        $mobile_no=$request->input('mobile_no');
-        $psw=Hash::make($request->psw);
-        $f_name=$request->input('f_name');
-        $u_name=$request->input('u_name');
-        $address=$request->input('address');
-        $gender=$request->input('gender');
+    // public function Signup(Request $request){
+    //     $email=$request->input('email');
+    //     $mobile_no=$request->input('mobile_no');
+    //     $psw=Hash::make($request->psw);
+    //     $f_name=$request->input('f_name');
+    //     $u_name=$request->input('u_name');
+    //     $address=$request->input('address');
+    //     $gender=$request->input('gender');
 
-        $insert=new User;
-        $insert->name=$f_name;
-        $insert->email=$email;
-        $insert->password=$psw;
-        $insert->mobile_no=$mobile_no;
-        $insert->address=$address;
-        $insert->user_name=$u_name;
-        $insert->gender=$gender;
+    //     $insert=new User;
+    //     $insert->name=$f_name;
+    //     $insert->email=$email;
+    //     $insert->password=$psw;
+    //     $insert->mobile_no=$mobile_no;
+    //     $insert->address=$address;
+    //     $insert->user_name=$u_name;
+    //     $insert->gender=$gender;
 
 
-        try {
-            // Save the user
-            if ($insert->save()) {
-                $successMsg = "You have signed up successfully";
-                return view('instagram_login', compact('successMsg', 'email'));
-            } else {
-                return "Failed to save user details.";
-            }
-        } catch (\Exception $e) {
-            // Capture and display any error
-            return "Error: " . $e->getMessage();
-        }
-        }
+    //     try {
+    //         // Save the user
+    //         if ($insert->save()) {
+    //             $successMsg = "You have signed up successfully";
+    //             return view('instagram_login', compact('successMsg', 'email'));
+    //         } else {
+    //             return "Failed to save user details.";
+    //         }
+    //     } catch (\Exception $e) {
+    //         // Capture and display any error
+    //         return "Error: " . $e->getMessage();
+    //     }
+    //     }
       
+    // }
+
+    public function SignupAPI(Request $request){
+
+        $validator =Validator::make($request->all(),[
+            'f_name'=>'required|string|max:255',
+            'email'=>'required|email|unique::users,email',
+             'u_name'=>'required|string|unique:users,u_name|max:255',
+             'psw'=>'required|min:6|confirmed',
+             'mobile_no'=>'required|numeric|digits:10|unique::users,mobile_no',
+              ]);
+       
+              if ($validator->fails()){
+                return response()->json([
+                    'status' =>'failure',
+                    'message' =>'Validation failed',
+                    'error' =>$validator->errors(),
+                ], 422);
+            }     
+         
+        try{
+            $insert=new User;
+            $insert->name=$f_name;
+            $insert->email=$email;
+            $insert->password=$psw;
+            $insert->mobile_no=$mobile_no;
+            $insert->user_name=$u_name;
+            $insert->save();
+        
+            return response()->json([
+                'status' =>'success',
+                'message' =>'User created successfully',
+                 'data' => [],
+            ], 201);
+        }  catch (\Exception $e) {
+            return response()->json([
+                'status' =>'failure',
+                'message' =>'Failed to signup. Please try again',
+                'error' =>$e->getMessage(),
+            ], 500);
+    
+
+       
+
+
+        // try {
+        //     // Save the user
+        //     if ($insert->save()) {
+        //         $successMsg = "You have signed up successfully";
+        //         return view('instagram_login', compact('successMsg', 'email'));
+        //     } else {
+        //         return "Failed to save user details.";
+        //     }
+        // } catch (\Exception $e) {
+        //     // Capture and display any error
+        //     return "Error: " . $e->getMessage();
+        // }
+        // }
+       
+        
+        }
+      }
     }
+    
+
+
+
+
 
 
 

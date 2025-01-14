@@ -30,7 +30,7 @@ class LoginController extends Controller
         } else {
             // Debugging
             \Log::info('Login failed for: ', ['email' => $email]);
-            return redirect(url('login'))->with('fail', 'Login failed');
+            return redirect(url('instagram_login'))->with('fail', 'Login failed');
         }
      
 
